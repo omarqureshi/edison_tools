@@ -3,9 +3,9 @@ require File.expand_path('../lib/edison_tools/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.authors       = ["omar@omarqureshi.net"]
-  gem.email         = ["TODO: Write your email address"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.email         = ["omar@omarqureshi.net"]
+  gem.description   = %q{A few startup scripts and tools that are used for deployment and provisioning of servers}
+  gem.summary       = %q{Edison Nations Rails Tools}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($\)
