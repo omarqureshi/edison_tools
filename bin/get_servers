@@ -1,0 +1,6 @@
+#!/bin/bash
+PWD=`pwd`
+DIR="$(cd $(git rev-parse --show-toplevel) && pwd )"
+cd $PWD
+
+json.sh < $DIR/config/servers.json | egrep "\[\"$1\",\"[^\"]*\",([0-9])*\]" | awk '{print $2}' | sed 's/"//g'

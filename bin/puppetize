@@ -1,0 +1,55 @@
+#!/bin/bash
+PWD=`pwd`
+usage()
+{
+cat << EOF
+usage: $0 options
+
+This script will run the puppet daemon on a specific environment or all environments
+
+OPTIONS:
+   -h      Show this message
+   -e      Set specific environments (STAGING, DEVELOPMENT, PRODUCTION)
+EOF
+}
+
+while getopts “he:a” OPTION
+do
+
+    case $OPTION in
+        h)
+            usage
+            exit 1
+            ;;
+        e)
+            case $OPTARG in
+                STAGING|DEVELOPMENT|PRODUCTION)
+                    SERVERS=(`get_servers $OPTARG`)
+                    ;;
+                ?)
+                    usage
+                    exit 1
+                    ;;
+            esac
+            ;;
+        ?)
+            usage
+            exit 1
+            ;;
+    esac
+done
+
+if [[ ! $1 ]]; then
+    ENV="(STAGING|DEVELOPMENT|PRODUCTION)"
+    SERVERS=(`get_servers "(STAGING|DEVELOPMENT|PRODUCTION)"`)
+fi
+
+for i in "${SERVERS[@]}"
+do
+    ssh www@$i <<EOF
+sudo -u root -i
+rm -rf /root/iptables
+rvm ree@puppet
+puppetd --no-daemonize --server en-puppet --verbose --onetime
+EOF
+done
