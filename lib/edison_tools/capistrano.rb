@@ -14,6 +14,7 @@ Capistrano::Configuration.instance(:must_exist).load do
       dirs = [deploy_to]
       dirs += shared_children.map { |d| File.join(shared_path, d) }
       run "mkdir -p #{dirs.join(' ')} && chmod g+w #{dirs.join(' ')}"
+      run "mkdir -p #{deploy_to}/releases"
       run "mkdir -p #{shared_path}/log"
       run "mkdir -p #{shared_path}/pids"
       run "mkdir -p #{shared_path}/tmp"
