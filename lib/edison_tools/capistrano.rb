@@ -96,7 +96,7 @@ Capistrano::Configuration.instance(:must_exist).load do
 
     desc 'Run the migrations under the current stage.'
     task :migrate, :roles => :db, :only => { :primary => true } do
-      if defined?(stage)
+      if exists?(:stage)
         run "cd #{release_path}; bundle exec rake RAILS_ENV=#{stage} db:migrate"
       else
         run "cd #{release_path}; bundle exec rake RAILS_ENV=production db:migrate"
